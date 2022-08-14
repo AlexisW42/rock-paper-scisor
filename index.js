@@ -1,23 +1,29 @@
 let userSelection;
+let computerSelection;
+
+console.log(document.getElementsByTagName('h2'));
 
 const buttonRock = document.querySelector('#rock');
 buttonRock.onclick = () => {
   userSelection = 0;
-  showWinner(userSelection, computerSelection());
+  computerSelection = calcComputerSelection();
+  showWinner(userSelection, computerSelection);
 }
 
 const buttonPaper = document.querySelector('#paper');
 buttonPaper.onclick = () => {
   userSelection = 1;
-  showWinner(userSelection, computerSelection());
+  computerSelection = calcComputerSelection();
+  showWinner(userSelection, computerSelection);
 }
 
 const buttonScissors = document.querySelector('#scissors');
 buttonScissors.onclick = () => {
   userSelection = 2;
-  showWinner(userSelection, computerSelection());
+  computerSelection = calcComputerSelection();
+  showWinner(userSelection, computerSelection);
 }
-function computerSelection() {
+function calcComputerSelection() {
   return Math.floor(Math.random() * 3);
 }
 
@@ -35,13 +41,28 @@ function showOption(num) {
   }
 }
 
+function createMesage(winner) {
+  if (winner !== 'none') {
+    message = document.getElementsByTagName('h2')[0];
+    message.innerHTML = `${winner} wins, user uses ${showOption(userSelection)} and computer uses ${showOption(computerSelection)}`;
+  }
+
+  else {
+    message = document.getElementsByTagName('h2')[0];
+    message.textContent = `Is tie, both have ${showOption(userSelection)}`
+  }
+}
+
 function showWinner(user, computer) {
-  if (user === computer)
-    alert(`Is equal, both have ${showOption(user)}`);
+  if (user === computer) {
+    createMesage('none');
+  }
 
-  else if ((user === 2 && computer === 0) || (user === 1 && computer === 2) || (user ===0 && computer===1))
-    alert(`Computer wins, user uses ${showOption(user)} and computer uses ${showOption(computer)}`);
+  else if ((user === 2 && computer === 0) || (user === 1 && computer === 2) || (user === 0 && computer === 1)) {
+    createMesage('Computer');
+  }
 
-  else
-    alert(`User wins, user uses ${showOption(user)} and computer uses ${showOption(computer)}`)
+  else {
+    createMesage('User');
+  }
 }
